@@ -1,0 +1,26 @@
+{
+  "name": "starter",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "hugosocie <hugosocie@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "^2.2.0",
+    "isomer": "^0.2.4",
+    "noisejs": "*"
+  },
+  "dependencies": {
+    "isomer": "git@github.com:jdan/isomer.git#^0.2.4"
+  }
+}

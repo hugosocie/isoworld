@@ -1,0 +1,23 @@
+// ==========================================================================
+// Iconfont
+// Generate SCSS variables and HTML classes for all svg in the svg folder
+// ==========================================================================
+
+
+
+@include font-face( '<%= fontName %>', '../<%= fontPath %>/<%= fontName %>' );
+$<%= className %>: '<%= fontName %>';
+
+.<%= className %>:before {
+    display: inline-block;
+    font-family: $<%= className %>;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+<% _.each(glyphs, function(glyph) { %>
+$<%= className %>-<%= glyph.name %>: "\<%= glyph.unicode[0].charCodeAt(0).toString(16).toUpperCase() %>";
+.<%= className %>-<%= glyph.name %>:before { content: $<%= className %>-<%= glyph.name %> }<% }); %>

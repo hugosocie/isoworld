@@ -1,0 +1,30 @@
+// ==========================================================================
+// Main files
+// Only this one is import with gulp
+// ==========================================================================
+
+
+
+//
+// Dependencies
+// ==========================================================================
+
+@import 'reset';   // Eric Meyer's reset css
+@import 'bourbon'; // Bourbon mixin library - http://bourbon.io/
+
+
+
+//
+// Internals dependencies
+// ==========================================================================
+
+@import 'settings';
+@import 'helpers';
+
+
+//
+// Others stuffs
+// Import all files begining with '_'; 
+// ==========================================================================
+
+@import './**/_*';
