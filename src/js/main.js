@@ -2,87 +2,31 @@
 // Dépendencies
 // =============================================
 
+var Config  = require( './config' ),
+    Biomes  = require( './biomes/config' ),
+    Helpers = require( './helpers' );
 
 
 
-var canvas = document.getElementById( "canvas" ),
-    ctx    = canvas.getContext('2d');
+// =============================================
+// Canvas
+// =============================================
+
+var canvas = document.getElementById( 'canvas' ),
+    ctx    = canvas.getContext( '2d' );
+
+
+
+// =============================================
+// Isomer
+// =============================================
+
 var iso = null;
-
 var Shape = Isomer.Shape;
 var Point = Isomer.Point;
 var Path  = Isomer.Path;
 var Color = Isomer.Color;
 
-var brown = new Color( 51, 28, 0 );
-
-var greens = [
-    new Color( 138, 200, 1 ),
-    new Color( 116, 184, 3 ),
-    new Color( 88, 160, 0 ),
-    new Color( 69, 153, 5 )
-];
-
-var colors = {
-    water : new Color( 83, 97, 255 ),
-    deepWater : new Color( 46, 55, 176 ),
-    sand : new Color( 204, 208, 135 ),
-    grass : [
-        new Color( 138, 200, 1 ),
-        new Color( 138, 200, 1 ),
-        new Color( 138, 200, 1 ),
-        new Color( 138, 200, 1 ),
-        new Color( 138, 200, 1 ),
-
-        new Color( 116, 184, 3 ),
-        new Color( 116, 184, 3 ),
-        new Color( 116, 184, 3 ),
-        new Color( 116, 184, 3 ),
-        new Color( 116, 184, 3 ),
-
-        new Color( 88, 160, 0 ),
-        new Color( 88, 160, 0 ),
-        new Color( 88, 160, 0 ),
-        new Color( 88, 160, 0 ),
-        new Color( 88, 160, 0 ),
-
-        new Color( 69, 153, 5 ),
-        new Color( 69, 153, 5 ),
-        new Color( 69, 153, 5 ),
-        new Color( 69, 153, 5 ),
-        new Color( 69, 153, 5 ),
-
-        new Color( 139, 152, 106 ),
-        new Color( 182, 192, 163 ),
-        new Color( 232, 243, 193 ),
-        new Color( 212, 223, 202 )
-    ],
-    snow  : new Color( 238, 236, 235 ),
-    stone : [
-        new Color( 210, 210, 229 ),
-        new Color( 200, 196, 215 ),
-        new Color( 169, 196, 225 )
-    ],
-    flower : new Color( 209, 34, 122 )
-};
-
-
-var biomes = {
-    plain         : {},
-    forest        : {},
-    flower_forest : {},
-    hill          : {},
-    desert        : {},
-    ocean         : {}
-};
-
-
-var chunck = {
-    size  : 100,
-    deep  : 11,
-    scale : 7,
-    strenght : 40
-};
 
 
 app = {
@@ -93,17 +37,68 @@ app = {
         canvas.height = $win.height();
 
         iso = new Isomer( canvas );
-        console.log( iso );
-
-        iso.scale = chunck.scale;
-        iso.originY = ( canvas.height / 2 ) + ( chunck.size * iso.scale * iso.angle );
+        iso.scale = Config.chunk.scale;
+        iso.originY = ( canvas.height / 2 ) + ( Config.chunk.size * iso.scale * iso.angle );
         iso.colorDifference = 0.12;
 
-        var noise = new Noise( Math.random() ),
-            noise2 = new Noise( Math.random() );
+        Config.seed = Math.random();
 
-        for( var x = chunck.size - 1; x >= 0; x-- ) {
-            for( var y = chunck.size - 1; y >= 0; y-- ) {
+        var biome_noise = new Noise( Config.seed ),
+            altitude_noise = new Noise( Config.seed );
+
+        var _id = 0;
+        $.each( Biomes.data, function( index, value ) {
+            this.ids = new Array();
+            for( var i = 0; i < value.weight; i++ ) {
+                this.ids.push( _id + i );
+                Biomes.by_id.push( index );
+            }
+            _id += value.weight;
+        } );
+        var z, c_x, c_y, c_z, color, colorHex, noise;
+
+        for( var x = Config.chunk.size - 1; x >= 0; x-- ) {
+            for( var y = Config.chunk.size - 1; y >= 0; y-- ) {
+
+                c_z = c_x = c_y = 1;
+                noise = biome_noise.simplex2( x / Biomes.size, y / Biomes.size );
+
+                var biome_index = Math.round( ( ( noise + 1 ) * ( Biomes.by_id.length - 1 ) ) / 2 );
+
+                //console.log( Math.round( noise ), biome_index );
+
+                var _this = Biomes.data[ Biomes.by_id[ biome_index ] ];
+
+                /*
+                var altitude = 
+                    Math.round( ( ( altitude_noise.simplex2(
+                        x / 30, 
+                        y / 30
+                    ) * 4 ) ) );
+                */
+                var altitude = 1;
+
+                if( Biomes.by_id[ biome_index ] === 'hill' ) {
+                    var _temp = ( ( noise + 1 ) * ( Biomes.by_id.length - 1 ) ) / 2;
+                    console.log( _temp - biome_index );
+                }
+
+                //console.log( Biomes.by_id[ biome_index ] );
+                //console.log( _this.altitude.min, _this.altitude.max, _this.altitude.max - _this.altitude.min );
+                //console.log( altitude );
+                //console.log( '---' );
+
+                //console.log( biome_index, Biomes.by_id[ biome_index ] );
+
+                colorHex = Helpers.hexToRgb( _this.color );
+                color = new Color( colorHex.r, colorHex.g, colorHex.b )
+
+                z = altitude;
+
+
+                iso.add( Shape.Prism( new Point( x, y, z ), c_x, c_y, c_z ), color );
+
+                /*
                 ctx.save();
 
                 var z = Math.round(
@@ -157,28 +152,9 @@ app = {
                 }
 
                 ctx.restore();
+                */
             }
         }
-    },
-
-    find_biome : function( i ) {
-
-        switch ( i ) {
-            case 0:
-            default:
-                return 'plain'; break;
-            case 1:
-                return 'forest'; break;
-            case 2:
-                return 'flower_forest'; break;
-            case 3:
-                return 'hill'; break;
-            case 4:
-                return 'desert'; break;
-            case 5:
-                return 'ocean'; break;
-        }
-
     }
 
 };
