@@ -15,7 +15,7 @@ module.exports = function() {
 
     return function( iso, name, data, x, y, alt ){
 
-        var z = alt,
+        var z = alt - 2,
             c_x = c_y = 1,
             c_z = 3;
 

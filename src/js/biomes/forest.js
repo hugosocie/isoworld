@@ -1,6 +1,9 @@
 var Helpers = require( '../helpers' ),
     Config  = require( '../config' );
 
+var Flower  = require( '../components/flower' ),
+    Tree  = require( '../components/tree' );
+
 
 var Shape = Isomer.Shape;
 var Point = Isomer.Point;
@@ -31,6 +34,14 @@ module.exports = function() {
         color = new Color( colorHex.r, colorHex.g, colorHex.b );
 
         iso.add( Shape.Prism( new Point( x, y, z ), c_x, c_y, c_z ), color );
+
+        if( typeof data.flowers !== 'undefined' ) {
+            Flower( iso, data.flowers, x, y, z + c_z );
+        }
+
+        if( typeof data.trees !== 'undefined' ) {
+            Tree( iso, data.trees, x, y, z + c_z );
+        }
     }
 
 }();

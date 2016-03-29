@@ -3,7 +3,7 @@ module.exports = function() {
     return {
         seed : 1,
         chunk : {
-            size  : 80,
+            size  : 100,
             scale : 7
         }
 
