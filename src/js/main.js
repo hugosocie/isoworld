@@ -1,3 +1,10 @@
+// =============================================
+// Dépendencies
+// =============================================
+
+
+
+
 var canvas = document.getElementById( "canvas" ),
     ctx    = canvas.getContext('2d');
 var iso = null;
@@ -59,29 +66,23 @@ var colors = {
     flower : new Color( 209, 34, 122 )
 };
 
-/*
+
 var biomes = {
-    plain : {
-        color : new Color( 138, 200, 1 )
-    },
-    hill  : {
-        color : new Color( 200, 196, 215 )
-    },
-    desert : {
-        color : new Color( 204, 208, 135 )
-    },
-    ocean : {
-        color : new Color( 46, 55, 176 )
-    }
-}
-*/
+    plain         : {},
+    forest        : {},
+    flower_forest : {},
+    hill          : {},
+    desert        : {},
+    ocean         : {}
+};
+
 
 var chunck = {
     size  : 100,
     deep  : 11,
     scale : 7,
     strenght : 40
-}
+};
 
 
 app = {
@@ -158,6 +159,26 @@ app = {
                 ctx.restore();
             }
         }
+    },
+
+    find_biome : function( i ) {
+
+        switch ( i ) {
+            case 0:
+            default:
+                return 'plain'; break;
+            case 1:
+                return 'forest'; break;
+            case 2:
+                return 'flower_forest'; break;
+            case 3:
+                return 'hill'; break;
+            case 4:
+                return 'desert'; break;
+            case 5:
+                return 'ocean'; break;
+        }
+
     }
 
 };
