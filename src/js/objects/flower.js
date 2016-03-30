@@ -6,18 +6,20 @@ var Point = Isomer.Point;
 //var Path  = Isomer.Path;
 var Color = Isomer.Color;
 
+var colors = [
+    '#d1227a'
+];
 
 module.exports = function() {
 
-    return function( iso, data, x, y, alt ){
+    return function( iso, x, y, z, w ){
 
-        if( data.weight > Math.random() * 100 ) {
-            var z = alt,
-                c_x = c_y = 1,
+        if( w > Math.random() * 100 ) {
+            var c_x = 1,
+                c_y = 1,
                 c_z = 1;
 
-            colorHex = Helpers.hexToRgb( data.color );
-            color = new Color( colorHex.r, colorHex.g, colorHex.b );
+            color = Helpers.isoColor( colors[ 0 ] );
             iso.add( Shape.Prism( new Point( x, y, z ), c_x, c_y, c_z ), color );
         }
 

@@ -65,17 +65,20 @@ app = {
 
                 $.each( Biomes.data, function( index, _this ) {
                     noise[ index ] = _this.noise.simplex2( x / Biomes.size, y / Biomes.size );
-                    _this.state = Math.round( ( noise[ index ] + 1 ) * ( Biomes.max_weight / 2 ) ) < _this.weight;
+                    _this.state = Math.round( ( noise[ index ] + 1 ) * ( Biomes.coeff / 2 ) ) < _this.weight;
 
-                    if( _this.state && index === 'hill' && alt < 3 ) {
-                        _this.state = false;
+                    if( typeof _this.if === 'object' && _this.state ) {
+
+                        if( typeof _this.if.max_altitude !== 'undefined' && alt > _this.if.max_altitude ) {
+                            _this.state = false;
+                        }
+
+                        if( typeof _this.if.min_altitude !== 'undefined' && alt < _this.if.min_altitude ) {
+                            _this.state = false;
+                        }
+
                     }
 
-                    if( _this.state && index === 'water' && alt > 0 ) {
-                        _this.state = false;
-                    }
-
-                    //console.log( alt );
                     if( _this.state ) {
                         _this.init( iso, index, _this, x, y, alt );
                         return false;

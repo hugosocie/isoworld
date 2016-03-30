@@ -2,77 +2,52 @@ module.exports = function() {
 
     return {
         size : 100,
-        max_weight : 10,
+        coeff : 100,
         data : {
             water : {
                 color : '#5361ff',
-                colors : [
-                    '#5361ff',
-                    '#4856f2',
-                    '#4451ea',
-                    '#2e37b0'
-                ],
-                weight : 2,
+                weight : 40,
+                if : {
+                    max_altitude : 0 
+                },
                 init : require( './water.js' )
             },
             hill : {
                 color : '#d2d2e5',
-                weight : 3,
+                weight : 30,
+                if : {
+                    min_altitude : 1
+                },
                 init : require( './hill.js' )
             },
             forest : {
                 color : '#8ac801',
-                colors : [
-                    '#8ac801',
-                    '#74b803',
-                    '#58a000',
-                    '#459905'
-                ],
-                flowers : {
-                    weight : 0.5,
-                    color : '#fffef4'
+                weight : 40,
+                objects : {
+                    trees : 2,
+                    flowers : 0.1
                 },
-                trees : {
-                    weight : 2
-                },
-                weight : 4,
-                init : require( './forest.js' )
+                init : require( './default.js' )
             },
             flower_forest : {
                 color : '#8ac801',
-                colors : [
-                    '#8ac801',
-                    '#74b803',
-                    '#58a000',
-                    '#459905'
-                ],
-                flowers : {
-                    weight : 4,
-                    color : '#d1227a'
+                weight : 30,
+                objects : {
+                    trees : 1,
+                    flowers : 4
                 },
-                trees : {
-                    weight : 1
-                },
-                weight : 3,
-                init : require( './forest.js' )
+                init : require( './default.js' )
             },
             plain : {
                 color : '#8ac801',
-                colors : [
-                    '#8ac801',
-                    '#74b803',
-                    '#58a000',
-                    '#459905'
-                ],
-                trees : {
-                    weight : 0.1
+                weight : 101, 
+                objects : {
+                    trees : 0.1
                 },
-                weight : 100,
-                init : require( './plain.js' )
+                init : require( './default.js' )
             }
         },
         noise : [],
-        by_id : []
     }
 
 }();

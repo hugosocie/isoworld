@@ -4,8 +4,16 @@ var Helpers = require( '../helpers' ),
 
 var Shape = Isomer.Shape;
 var Point = Isomer.Point;
-var Path  = Isomer.Path;
 var Color = Isomer.Color;
+
+
+var colors = [
+    '#5361ff',
+    '#4856f2',
+    '#4451ea',
+    '#2e37b0'
+];
+
 
 var texture_noise = new Noise( Config.seed * Math.random() ),
     texture;
@@ -19,16 +27,8 @@ module.exports = function() {
             c_x = c_y = 1,
             c_z = 3;
 
-        texture =
-            Math.round(
-                texture_noise.simplex2(
-                    x / 10,
-                    y / 10
-                ) * ( data.colors.length / 2 )
-            ) + data.colors.length / 2;
-
-        colorHex = Helpers.hexToRgb( typeof data.colors[ texture ] !== 'undefined' ? data.colors[ texture ] : data.color );
-        color = new Color( colorHex.r, colorHex.g, colorHex.b );
+        texture = Helpers.noise( texture_noise, x, y, 10, colors.length - 1 );
+        color   = Helpers.isoColor( colors[ texture ] );
 
         iso.add( Shape.Prism( new Point( x, y, z ), c_x, c_y, c_z ), color );
     }
