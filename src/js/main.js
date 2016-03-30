@@ -61,12 +61,21 @@ app = {
                     noise.altitude.simplex2(
                         x / 40, 
                         y / 40
-                    ) * 5 ) + 5;
+                    ) * 5 ) + 3;
 
                 $.each( Biomes.data, function( index, _this ) {
                     noise[ index ] = _this.noise.simplex2( x / Biomes.size, y / Biomes.size );
                     _this.state = Math.round( ( noise[ index ] + 1 ) * ( Biomes.max_weight / 2 ) ) < _this.weight;
 
+                    if( _this.state && index === 'hill' && alt < 3 ) {
+                        _this.state = false;
+                    }
+
+                    if( _this.state && index === 'water' && alt > 0 ) {
+                        _this.state = false;
+                    }
+
+                    //console.log( alt );
                     if( _this.state ) {
                         _this.init( iso, index, _this, x, y, alt );
                         return false;
