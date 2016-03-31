@@ -1,0 +1,25 @@
+// ==========================================================================
+// Iconfont
+// Generate SCSS variables and HTML classes for all svg in the svg folder
+// ==========================================================================
+
+
+
+@include font-face( 'icon', '../fonts/icon/icon' );
+$icon: 'icon';
+
+.icon:before {
+    display: inline-block;
+    font-family: $icon;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+$icon-emo-happy: "\EA01";
+.icon-emo-happy:before { content: $icon-emo-happy }
+$icon-emo-saint: "\EA02";
+.icon-emo-saint:before { content: $icon-emo-saint }
