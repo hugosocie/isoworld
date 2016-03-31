@@ -1,16 +1,24 @@
 module.exports = function() {
 
     return {
-        size : 100,
+        size : 200,
         coeff : 100,
         data : {
             water : {
                 color : '#5361ff',
                 weight : 40,
                 if : {
-                    max_altitude : 0 
+                    max_altitude : 0
                 },
                 init : require( './water.js' )
+            },
+            desert : {
+                color : '#d0f439',
+                weight : 30,
+                objects : {
+                    pyramid : 0.01
+                },
+                init : require( './desert.js' )
             },
             hill : {
                 color : '#d2d2e5',
