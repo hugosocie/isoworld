@@ -52,7 +52,6 @@ app = {
 
         noise.altitude = new Noise( Config.seed * Math.random() );
 
-
         app.draw( 0, 0 );
 
     },
