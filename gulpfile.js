@@ -29,7 +29,7 @@ var plugins = gulpLoadPlugins({
 // ==========================================================================
 
 var paths = {
-    dist : 'dist',
+    dist : 'build',
     src  : 'src'
 };
 

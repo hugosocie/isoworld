@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -53,27 +52,6 @@ table {
 
 .valign-helper {
   height: 100%; }
-
-@font-face {
-  font-family: "icon";
-  font-style: normal;
-  font-weight: normal;
-  src: url("../fonts/icon/icon.eot?#iefix") format("embedded-opentype"), url("../fonts/icon/icon.woff2") format("woff2"), url("../fonts/icon/icon.woff") format("woff"), url("../fonts/icon/icon.ttf") format("truetype"), url("../fonts/icon/icon.svg#icon") format("svg"); }
-
-.icon:before {
-  display: inline-block;
-  font-family: "icon";
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
-
-.icon-emo-happy:before {
-  content: ""; }
-
-.icon-emo-saint:before {
-  content: ""; }
 
 body {
   background: #222;
