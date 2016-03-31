@@ -33,6 +33,16 @@ var iso = null,
 app = {
 
     init : function(){
+
+        var stats = new Stats();
+        stats.setMode( 1 ); // 0: fps, 1: ms, 2: mb
+
+        // align top-left
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '0px';
+        stats.domElement.style.top = '0px';
+        document.body.appendChild( stats.domElement );
+
         var $win = $( window );
         canvas.width = $win.width();
         canvas.height = $win.height();
@@ -52,7 +62,16 @@ app = {
 
         noise.altitude = new Noise( Config.seed * Math.random() );
 
-        app.draw( 0, 0 );
+        var _x = _y = 0;
+        //setInterval( function(){
+            stats.begin();
+            ctx.clearRect( 0, 0, canvas.width, canvas.height );
+            app.draw( _x, _y );
+            //_x++;
+            //_y++;
+            stats.end();
+        //}, 1000 / 60 );
+
 
     },
 
@@ -93,7 +112,7 @@ app = {
         if( typeof callback === 'function' ) {
             callback();
         }
-    }
+    },
 
 };
 

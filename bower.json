@@ -18,7 +18,8 @@
   "devDependencies": {
     "jquery": "^2.2.0",
     "isomer": "^0.2.4",
-    "noisejs": "*"
+    "noisejs": "*",
+    "stats.js": "*"
   },
   "dependencies": {
     "isomer": "git@github.com:jdan/isomer.git#^0.2.4"
