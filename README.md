@@ -2,7 +2,8 @@
 
 *Work in progress*
 
-![Example](https://raw.githubusercontent.com/hugosocie/isoworld/biomes/src/img/example-2.png)
+![Example](https://raw.githubusercontent.com/hugosocie/isoworld/master/src/img/example-3.png)
+![Example](https://raw.githubusercontent.com/hugosocie/isoworld/master/src/img/example-4.png)
 
 ####Install
 

@@ -7,6 +7,10 @@ var Config  = require( './config' ),
     Helpers = require( './helpers' );
 
 
+var Shape = Isomer.Shape;
+var Point = Isomer.Point;
+var Color = Isomer.Color;
+
 
 // =============================================
 // Canvas
@@ -18,15 +22,12 @@ var canvas = document.getElementById( 'canvas' ),
 
 
 // =============================================
-// Isomer
+// Constants
 // =============================================
 
-var iso = null;
-//var Shape = Isomer.Shape;
-//var Point = Isomer.Point;
-//var Path  = Isomer.Path;
-//var Color = Isomer.Color;
-
+var iso = null,
+    alt = null,
+    noise = new Object();
 
 
 app = {
@@ -43,7 +44,6 @@ app = {
 
         Config.seed = Math.random();
 
-        var noise = new Object();
         $.each( Biomes.data, function( index, value ) {
             this.noise = new Noise( Config.seed * Math.random() );
             this.state = false;
@@ -52,10 +52,14 @@ app = {
 
         noise.altitude = new Noise( Config.seed * Math.random() );
 
-        var alt;
 
-        for( var x = Config.chunk.size - 1; x >= 0; x-- ) {
-            for( var y = Config.chunk.size - 1; y >= 0; y-- ) {
+        app.draw( 0, 0 );
+
+    },
+
+    draw : function( offset_x, offset_y, callback ) {
+        for( var x = Config.chunk.size - 1 - offset_x; x >= 0 - offset_x; x-- ) {
+            for( var y = Config.chunk.size - 1 - offset_y; y >= 0 - offset_y; y-- ) {
 
                 alt = Math.round(
                     noise.altitude.simplex2(
@@ -85,6 +89,10 @@ app = {
                     }
                 });
             }
+        }
+
+        if( typeof callback === 'function' ) {
+            callback();
         }
     }
 
